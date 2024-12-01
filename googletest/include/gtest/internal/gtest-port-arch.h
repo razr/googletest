@@ -105,6 +105,8 @@
 #define GTEST_OS_OPENBSD 1
 #elif defined __QNX__
 #define GTEST_OS_QNX 1
+#elif defined __VXWORKS__
+#define GTEST_OS_VXWORKS 1
 #elif defined(__HAIKU__)
 #define GTEST_OS_HAIKU 1
 #elif defined ESP8266

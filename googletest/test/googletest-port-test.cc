@@ -285,7 +285,8 @@ TEST(FormatCompilerIndependentFileLocationTest, FormatsUknownFileAndLine) {
     defined(GTEST_OS_QNX) || defined(GTEST_OS_FUCHSIA) ||         \
     defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_FREEBSD) ||   \
     defined(GTEST_OS_GNU_KFREEBSD) || defined(GTEST_OS_NETBSD) || \
-    defined(GTEST_OS_OPENBSD) || defined(GTEST_OS_GNU_HURD)
+    defined(GTEST_OS_OPENBSD) || defined(GTEST_OS_GNU_HURD) ||    \
+    defined(GTEST_OS_VXWORKS)
 void* ThreadFunc(void* data) {
   internal::Mutex* mutex = static_cast<internal::Mutex*>(data);
   mutex->Lock();

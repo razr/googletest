@@ -77,6 +77,10 @@
 #include <sys/procfs.h>
 #endif  // GTEST_OS_QNX
 
+#ifdef GTEST_OS_VXWORKS
+#include <rtpLibCommon.h>
+#endif  // GTEST_OS_VXWORKS
+
 #ifdef GTEST_OS_AIX
 #include <procinfo.h>
 #include <sys/types.h>
@@ -230,6 +234,16 @@ size_t GetThreadCount() {
   } else {
     return 0;
   }
+}
+
+#elif defined(GTEST_OS_VXWORKS)
+
+size_t GetThreadCount() {
+  RTP_DESC rtpStruct;
+  if( OK == rtpInfoGet(0, &rtpStruct))
+    return rtpStruct.taskCnt;
+  else
+    return 0;
 }
 
 #elif defined(GTEST_OS_AIX)

@@ -138,6 +138,11 @@ macro(config_compiler_and_linker)
     set(cxx_no_rtti_flags "")
   endif()
 
+  if(VXWORKS)
+    # VxWorks uses C++ library that expects this define
+    set(cxx_no_rtti_flags "${cxx_no_rtti_flags} -D_NO_RTTI=1")
+  endif()
+
   # The pthreads library is available and allowed?
   if (DEFINED GTEST_HAS_PTHREAD)
     set(GTEST_HAS_PTHREAD_MACRO "-DGTEST_HAS_PTHREAD=1")

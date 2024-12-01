@@ -133,6 +133,7 @@
 //   GTEST_OS_OPENBSD  - OpenBSD
 //   GTEST_OS_OS2      - OS/2
 //   GTEST_OS_QNX      - QNX
+//   GTEST_OS_VXWORKS  - VxWorks
 //   GTEST_OS_SOLARIS  - Sun Solaris
 //   GTEST_OS_WINDOWS  - Windows (Desktop, MinGW, or Mobile)
 //     GTEST_OS_WINDOWS_DESKTOP  - Windows Desktop
@@ -608,7 +609,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
      defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_GNU_KFREEBSD) || \
      defined(GTEST_OS_OPENBSD) || defined(GTEST_OS_HAIKU) ||          \
      defined(GTEST_OS_GNU_HURD) || defined(GTEST_OS_SOLARIS) ||       \
-     defined(GTEST_OS_AIX) || defined(GTEST_OS_ZOS))
+     defined(GTEST_OS_AIX) || defined(GTEST_OS_ZOS) ||                \
+     defined(GTEST_OS_VXWORKS))
 #define GTEST_HAS_PTHREAD 1
 #else
 #define GTEST_HAS_PTHREAD 0
