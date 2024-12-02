@@ -680,7 +680,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
      defined(GTEST_OS_QNX) || defined(GTEST_OS_FREEBSD) ||            \
      defined(GTEST_OS_NETBSD) || defined(GTEST_OS_FUCHSIA) ||         \
      defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_GNU_KFREEBSD) || \
-     defined(GTEST_OS_HAIKU) || defined(GTEST_OS_GNU_HURD))
+     defined(GTEST_OS_HAIKU) || defined(GTEST_OS_GNU_HURD)         || \
+     defined(GTEST_OS_VXWORKS))
 // Death tests require a file system to work properly.
 #if GTEST_HAS_FILE_SYSTEM
 #define GTEST_HAS_DEATH_TEST 1

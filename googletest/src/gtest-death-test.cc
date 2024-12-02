@@ -67,7 +67,7 @@
 #include <sys/wait.h>
 #endif  // GTEST_OS_WINDOWS
 
-#ifdef GTEST_OS_QNX
+#if defined GTEST_OS_QNX || defined GTEST_OS_VXWORKS
 #include <spawn.h>
 #endif  // GTEST_OS_QNX
 
@@ -1176,7 +1176,7 @@ struct ExecDeathTestArgs {
   int close_fd;       // File descriptor to close; the read end of a pipe
 };
 
-#ifdef GTEST_OS_QNX
+#if defined GTEST_OS_QNX || defined GTEST_OS_VXWORKS
 extern "C" char** environ;
 #else   // GTEST_OS_QNX
 // The main function for a threadsafe-style death test child process.
@@ -1257,7 +1257,7 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
   ExecDeathTestArgs args = {argv, close_fd};
   pid_t child_pid = -1;
 
-#ifdef GTEST_OS_QNX
+#if defined GTEST_OS_QNX || defined GTEST_OS_VXWORKS
   // Obtains the current directory and sets it to be closed in the child
   // process.
   const int cwd_fd = open(".", O_RDONLY);
@@ -1280,9 +1280,21 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
   GTEST_DEATH_TEST_CHECK_SYSCALL_(fd_flags = fcntl(close_fd, F_GETFD));
   GTEST_DEATH_TEST_CHECK_SYSCALL_(
       fcntl(close_fd, F_SETFD, fd_flags | FD_CLOEXEC));
+#ifdef GTEST_OS_QNX
   struct inheritance inherit = {0};
   // spawn is a system call.
   child_pid = spawn(args.argv[0], 0, nullptr, &inherit, args.argv, environ);
+#endif
+#ifdef GTEST_OS_VXWORKS
+  posix_spawn_file_actions_t file_actions;
+  posix_spawn_file_actions_init(&file_actions);
+
+  int status = posix_spawn(&child_pid, args.argv[0], &file_actions, nullptr, args.argv, environ);
+  if (status != 0) {
+    DeathTestAbort(std::string("posix_spawn failed"));
+    return EXIT_FAILURE;
+  }
+#endif
   // Restores the current working directory.
   GTEST_DEATH_TEST_CHECK_(fchdir(cwd_fd) != -1);
   GTEST_DEATH_TEST_CHECK_SYSCALL_(close(cwd_fd));
