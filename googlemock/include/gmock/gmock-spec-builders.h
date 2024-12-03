@@ -1957,6 +1957,13 @@ struct SignatureOf<R(Args...)> {
   using type = R(Args...);
 };
 
+#if defined (__VXWORKS__)
+template <typename R, typename... Args>
+struct SignatureOf<std::function<R(Args...)>> {
+  using type = R(Args...);
+};
+#endif
+
 template <template <typename> class C, typename F>
 struct SignatureOf<C<F>,
                    typename std::enable_if<std::is_function<F>::value>::type>
